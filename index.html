@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PointCast.xyz - Your Personal Morning Brief</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=VT323&family=Chicago&family=Press+Start+2P&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Screensaver Overlay (hidden by default) -->
+    <div class="screensaver" id="screensaver">
+        <div class="screensaver-logo">PointCast.xyz</div>
+        <div class="screensaver-tagline">Click anywhere to begin your morning brief...</div>
+    </div>
+
+    <!-- Main Application Window -->
+    <div class="app-container">
+        <!-- Title Bar -->
+        <header class="title-bar">
+            <div class="title-bar-left">
+                <div class="app-icon">
+                    <div class="icon-globe"></div>
+                </div>
+                <span class="app-title">PointCast.xyz - Personal Morning Brief</span>
+            </div>
+            <div class="title-bar-buttons">
+                <button class="win-btn minimize" title="Minimize">_</button>
+                <button class="win-btn maximize" title="Maximize">□</button>
+                <button class="win-btn close" title="Close">×</button>
+            </div>
+        </header>
+
+        <!-- Menu Bar -->
+        <nav class="menu-bar">
+            <ul class="menu-items">
+                <li class="menu-item">
+                    <span>File</span>
+                    <ul class="dropdown">
+                        <li>New Channel</li>
+                        <li>Save Layout</li>
+                        <li class="separator"></li>
+                        <li>Exit</li>
+                    </ul>
+                </li>
+                <li class="menu-item">
+                    <span>Edit</span>
+                    <ul class="dropdown">
+                        <li>Preferences</li>
+                        <li>Customize</li>
+                    </ul>
+                </li>
+                <li class="menu-item">
+                    <span>View</span>
+                    <ul class="dropdown">
+                        <li>Full Screen</li>
+                        <li>Compact Mode</li>
+                        <li class="separator"></li>
+                        <li>Refresh All</li>
+                    </ul>
+                </li>
+                <li class="menu-item">
+                    <span>Channels</span>
+                    <ul class="dropdown">
+                        <li>News</li>
+                        <li>Weather</li>
+                        <li>Markets</li>
+                        <li>Sports</li>
+                    </ul>
+                </li>
+                <li class="menu-item">
+                    <span>Help</span>
+                    <ul class="dropdown">
+                        <li>About PointCast.xyz</li>
+                        <li>User Guide</li>
+                    </ul>
+                </li>
+            </ul>
+            <div class="connection-status">
+                <span class="status-indicator online"></span>
+                <span>Connected</span>
+            </div>
+        </nav>
+
+        <!-- Toolbar -->
+        <div class="toolbar">
+            <button class="toolbar-btn" title="Refresh All">
+                <span class="toolbar-icon refresh-icon"></span>
+                <span>Refresh</span>
+            </button>
+            <button class="toolbar-btn" title="Add Channel">
+                <span class="toolbar-icon add-icon"></span>
+                <span>Add</span>
+            </button>
+            <div class="toolbar-separator"></div>
+            <button class="toolbar-btn" title="AI Assistant">
+                <span class="toolbar-icon ai-icon"></span>
+                <span>AI Brief</span>
+            </button>
+            <button class="toolbar-btn" title="Settings">
+                <span class="toolbar-icon settings-icon"></span>
+                <span>Settings</span>
+            </button>
+            <div class="toolbar-spacer"></div>
+            <div class="datetime-display">
+                <span class="current-time" id="currentTime">7:30 AM</span>
+                <span class="current-date" id="currentDate">Monday, January 5, 2026</span>
+            </div>
+        </div>
+
+        <!-- Stock Ticker -->
+        <div class="ticker-bar">
+            <div class="ticker-label">MARKETS</div>
+            <div class="ticker-container">
+                <div class="ticker-content" id="tickerContent">
+                    <span class="ticker-item positive">DJIA 42,847.32 <span class="change">+187.52</span></span>
+                    <span class="ticker-separator">|</span>
+                    <span class="ticker-item positive">S&P 500 5,987.42 <span class="change">+23.18</span></span>
+                    <span class="ticker-separator">|</span>
+                    <span class="ticker-item negative">NASDAQ 19,234.56 <span class="change">-45.23</span></span>
+                    <span class="ticker-separator">|</span>
+                    <span class="ticker-item positive">AAPL 248.92 <span class="change">+3.41</span></span>
+                    <span class="ticker-separator">|</span>
+                    <span class="ticker-item positive">MSFT 432.18 <span class="change">+5.67</span></span>
+                    <span class="ticker-separator">|</span>
+                    <span class="ticker-item negative">GOOGL 198.45 <span class="change">-2.13</span></span>
+                    <span class="ticker-separator">|</span>
+                    <span class="ticker-item positive">TSLA 412.30 <span class="change">+18.92</span></span>
+                    <span class="ticker-separator">|</span>
+                    <span class="ticker-item positive">AMZN 227.84 <span class="change">+4.56</span></span>
+                    <span class="ticker-separator">|</span>
+                    <span class="ticker-item negative">META 612.47 <span class="change">-8.23</span></span>
+                    <span class="ticker-separator">|</span>
+                    <span class="ticker-item positive">NVDA 148.92 <span class="change">+6.78</span></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Left Column -->
+            <div class="column left-column">
+                <!-- AI Morning Brief -->
+                <section class="panel ai-brief-panel">
+                    <div class="panel-header">
+                        <div class="panel-title">
+                            <span class="panel-icon ai-panel-icon"></span>
+                            AI Morning Brief
+                        </div>
+                        <div class="panel-controls">
+                            <button class="panel-btn" title="Regenerate">↻</button>
+                            <button class="panel-btn" title="Expand">▼</button>
+                        </div>
+                    </div>
+                    <div class="panel-content">
+                        <div class="ai-greeting">
+                            <p class="greeting-text">Good morning! Here's your personalized brief for <strong>Monday, January 5th</strong>.</p>
+                        </div>
+                        <div class="ai-summary">
+                            <div class="summary-item">
+                                <span class="summary-icon weather-summary"></span>
+                                <p>Expect <strong>partly cloudy</strong> skies today with a high of 45°F. Perfect for that morning coffee!</p>
+                            </div>
+                            <div class="summary-item">
+                                <span class="summary-icon calendar-summary"></span>
+                                <p>You have <strong>3 meetings</strong> scheduled, starting with the team standup at 9:00 AM.</p>
+                            </div>
+                            <div class="summary-item">
+                                <span class="summary-icon news-summary"></span>
+                                <p>Markets opened <strong>higher</strong> following positive tech earnings. NVIDIA leading gains.</p>
+                            </div>
+                            <div class="summary-item">
+                                <span class="summary-icon task-summary"></span>
+                                <p>Don't forget: <strong>Project proposal</strong> is due today. You have 4 tasks remaining.</p>
+                            </div>
+                        </div>
+                        <div class="ai-footer">
+                            <span class="ai-badge">Powered by AI</span>
+                            <span class="update-time">Updated 2 minutes ago</span>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- News Panel -->
+                <section class="panel news-panel">
+                    <div class="panel-header">
+                        <div class="panel-title">
+                            <span class="panel-icon news-panel-icon"></span>
+                            Top Headlines
+                        </div>
+                        <div class="panel-controls">
+                            <button class="panel-btn active" title="All">All</button>
+                            <button class="panel-btn" title="Tech">Tech</button>
+                            <button class="panel-btn" title="Business">Biz</button>
+                        </div>
+                    </div>
+                    <div class="panel-content">
+                        <ul class="news-list">
+                            <li class="news-item">
+                                <span class="news-category tech">TECH</span>
+                                <a href="#" class="news-headline">OpenAI Announces GPT-5 Release Date for Q2 2026</a>
+                                <span class="news-source">Reuters</span>
+                                <span class="news-time">15m ago</span>
+                            </li>
+                            <li class="news-item">
+                                <span class="news-category business">BIZ</span>
+                                <a href="#" class="news-headline">Federal Reserve Signals Potential Rate Cut in March</a>
+                                <span class="news-source">WSJ</span>
+                                <span class="news-time">32m ago</span>
+                            </li>
+                            <li class="news-item">
+                                <span class="news-category world">WORLD</span>
+                                <a href="#" class="news-headline">EU Parliament Passes Landmark AI Regulation Framework</a>
+                                <span class="news-source">AP News</span>
+                                <span class="news-time">1h ago</span>
+                            </li>
+                            <li class="news-item">
+                                <span class="news-category science">SCI</span>
+                                <a href="#" class="news-headline">NASA's Artemis III Crew Selection Announced for Moon Mission</a>
+                                <span class="news-source">NASA</span>
+                                <span class="news-time">2h ago</span>
+                            </li>
+                            <li class="news-item">
+                                <span class="news-category tech">TECH</span>
+                                <a href="#" class="news-headline">Apple Vision Pro 2 Rumored for Spring Launch</a>
+                                <span class="news-source">Bloomberg</span>
+                                <span class="news-time">3h ago</span>
+                            </li>
+                        </ul>
+                        <button class="more-btn">More Headlines →</button>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Center Column -->
+            <div class="column center-column">
+                <!-- Weather Panel -->
+                <section class="panel weather-panel">
+                    <div class="panel-header">
+                        <div class="panel-title">
+                            <span class="panel-icon weather-panel-icon"></span>
+                            Weather
+                        </div>
+                        <div class="panel-controls">
+                            <span class="location">San Francisco, CA</span>
+                        </div>
+                    </div>
+                    <div class="panel-content">
+                        <div class="weather-current">
+                            <div class="weather-icon-large partly-cloudy"></div>
+                            <div class="weather-temp">
+                                <span class="temp-value">45</span>
+                                <span class="temp-unit">°F</span>
+                            </div>
+                            <div class="weather-desc">Partly Cloudy</div>
+                        </div>
+                        <div class="weather-details">
+                            <div class="weather-detail">
+                                <span class="detail-label">Feels Like</span>
+                                <span class="detail-value">42°F</span>
+                            </div>
+                            <div class="weather-detail">
+                                <span class="detail-label">Humidity</span>
+                                <span class="detail-value">68%</span>
+                            </div>
+                            <div class="weather-detail">
+                                <span class="detail-label">Wind</span>
+                                <span class="detail-value">8 mph NW</span>
+                            </div>
+                            <div class="weather-detail">
+                                <span class="detail-label">UV Index</span>
+                                <span class="detail-value">2 Low</span>
+                            </div>
+                        </div>
+                        <div class="weather-forecast">
+                            <div class="forecast-day">
+                                <span class="day-name">TUE</span>
+                                <div class="forecast-icon sunny"></div>
+                                <span class="forecast-high">52°</span>
+                                <span class="forecast-low">38°</span>
+                            </div>
+                            <div class="forecast-day">
+                                <span class="day-name">WED</span>
+                                <div class="forecast-icon cloudy"></div>
+                                <span class="forecast-high">48°</span>
+                                <span class="forecast-low">35°</span>
+                            </div>
+                            <div class="forecast-day">
+                                <span class="day-name">THU</span>
+                                <div class="forecast-icon rainy"></div>
+                                <span class="forecast-high">44°</span>
+                                <span class="forecast-low">36°</span>
+                            </div>
+                            <div class="forecast-day">
+                                <span class="day-name">FRI</span>
+                                <div class="forecast-icon partly-cloudy-sm"></div>
+                                <span class="forecast-high">50°</span>
+                                <span class="forecast-low">40°</span>
+                            </div>
+                            <div class="forecast-day">
+                                <span class="day-name">SAT</span>
+                                <div class="forecast-icon sunny"></div>
+                                <span class="forecast-high">55°</span>
+                                <span class="forecast-low">42°</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Calendar Panel -->
+                <section class="panel calendar-panel">
+                    <div class="panel-header">
+                        <div class="panel-title">
+                            <span class="panel-icon calendar-panel-icon"></span>
+                            Today's Schedule
+                        </div>
+                        <div class="panel-controls">
+                            <button class="panel-btn" title="Previous">◀</button>
+                            <button class="panel-btn" title="Next">▶</button>
+                        </div>
+                    </div>
+                    <div class="panel-content">
+                        <div class="calendar-timeline">
+                            <div class="timeline-event">
+                                <div class="event-time">9:00 AM</div>
+                                <div class="event-bar team"></div>
+                                <div class="event-details">
+                                    <span class="event-title">Team Standup</span>
+                                    <span class="event-location">Zoom - Daily Room</span>
+                                </div>
+                            </div>
+                            <div class="timeline-event">
+                                <div class="event-time">10:30 AM</div>
+                                <div class="event-bar client"></div>
+                                <div class="event-details">
+                                    <span class="event-title">Client Review: Q1 Roadmap</span>
+                                    <span class="event-location">Conference Room B</span>
+                                </div>
+                            </div>
+                            <div class="timeline-event">
+                                <div class="event-time">12:00 PM</div>
+                                <div class="event-bar personal"></div>
+                                <div class="event-details">
+                                    <span class="event-title">Lunch with Sarah</span>
+                                    <span class="event-location">Cafe Milano</span>
+                                </div>
+                            </div>
+                            <div class="timeline-event">
+                                <div class="event-time">2:00 PM</div>
+                                <div class="event-bar team"></div>
+                                <div class="event-details">
+                                    <span class="event-title">Sprint Planning</span>
+                                    <span class="event-location">Main Conference</span>
+                                </div>
+                            </div>
+                            <div class="timeline-event">
+                                <div class="event-time">4:30 PM</div>
+                                <div class="event-bar deadline"></div>
+                                <div class="event-details">
+                                    <span class="event-title">Project Proposal Due</span>
+                                    <span class="event-location">Submit via Portal</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Right Column -->
+            <div class="column right-column">
+                <!-- Tasks Panel -->
+                <section class="panel tasks-panel">
+                    <div class="panel-header">
+                        <div class="panel-title">
+                            <span class="panel-icon tasks-panel-icon"></span>
+                            Tasks
+                        </div>
+                        <div class="panel-controls">
+                            <span class="task-count">4 remaining</span>
+                        </div>
+                    </div>
+                    <div class="panel-content">
+                        <ul class="task-list">
+                            <li class="task-item priority-high">
+                                <input type="checkbox" id="task1" class="task-checkbox">
+                                <label for="task1" class="task-label">
+                                    <span class="task-text">Finalize project proposal</span>
+                                    <span class="task-due urgent">Due Today</span>
+                                </label>
+                            </li>
+                            <li class="task-item priority-medium">
+                                <input type="checkbox" id="task2" class="task-checkbox">
+                                <label for="task2" class="task-label">
+                                    <span class="task-text">Review PR #234</span>
+                                    <span class="task-due">Due Tomorrow</span>
+                                </label>
+                            </li>
+                            <li class="task-item priority-medium">
+                                <input type="checkbox" id="task3" class="task-checkbox">
+                                <label for="task3" class="task-label">
+                                    <span class="task-text">Update documentation</span>
+                                    <span class="task-due">Wed</span>
+                                </label>
+                            </li>
+                            <li class="task-item priority-low">
+                                <input type="checkbox" id="task4" class="task-checkbox">
+                                <label for="task4" class="task-label">
+                                    <span class="task-text">Schedule dentist appointment</span>
+                                    <span class="task-due">This Week</span>
+                                </label>
+                            </li>
+                            <li class="task-item completed">
+                                <input type="checkbox" id="task5" class="task-checkbox" checked>
+                                <label for="task5" class="task-label">
+                                    <span class="task-text">Send weekly report</span>
+                                </label>
+                            </li>
+                        </ul>
+                        <button class="add-task-btn">+ Add Task</button>
+                    </div>
+                </section>
+
+                <!-- Quick Links Panel -->
+                <section class="panel links-panel">
+                    <div class="panel-header">
+                        <div class="panel-title">
+                            <span class="panel-icon links-panel-icon"></span>
+                            Quick Links
+                        </div>
+                    </div>
+                    <div class="panel-content">
+                        <div class="quick-links-grid">
+                            <a href="#" class="quick-link">
+                                <div class="link-icon email-icon"></div>
+                                <span>Email</span>
+                                <span class="badge">12</span>
+                            </a>
+                            <a href="#" class="quick-link">
+                                <div class="link-icon slack-icon"></div>
+                                <span>Slack</span>
+                                <span class="badge">5</span>
+                            </a>
+                            <a href="#" class="quick-link">
+                                <div class="link-icon github-icon"></div>
+                                <span>GitHub</span>
+                            </a>
+                            <a href="#" class="quick-link">
+                                <div class="link-icon docs-icon"></div>
+                                <span>Docs</span>
+                            </a>
+                            <a href="#" class="quick-link">
+                                <div class="link-icon jira-icon"></div>
+                                <span>Jira</span>
+                                <span class="badge">3</span>
+                            </a>
+                            <a href="#" class="quick-link">
+                                <div class="link-icon drive-icon"></div>
+                                <span>Drive</span>
+                            </a>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Sports/Scores Panel -->
+                <section class="panel sports-panel">
+                    <div class="panel-header">
+                        <div class="panel-title">
+                            <span class="panel-icon sports-panel-icon"></span>
+                            Sports
+                        </div>
+                        <div class="panel-controls">
+                            <button class="panel-btn active">NFL</button>
+                            <button class="panel-btn">NBA</button>
+                        </div>
+                    </div>
+                    <div class="panel-content">
+                        <div class="sports-scores">
+                            <div class="game-score">
+                                <div class="team">
+                                    <span class="team-abbr">SF</span>
+                                    <span class="team-name">49ers</span>
+                                </div>
+                                <span class="score">24</span>
+                                <span class="vs">-</span>
+                                <span class="score">17</span>
+                                <div class="team">
+                                    <span class="team-abbr">SEA</span>
+                                    <span class="team-name">Seahawks</span>
+                                </div>
+                                <span class="game-status final">FINAL</span>
+                            </div>
+                            <div class="game-score">
+                                <div class="team">
+                                    <span class="team-abbr">KC</span>
+                                    <span class="team-name">Chiefs</span>
+                                </div>
+                                <span class="score">31</span>
+                                <span class="vs">-</span>
+                                <span class="score">28</span>
+                                <div class="team">
+                                    <span class="team-abbr">BUF</span>
+                                    <span class="team-name">Bills</span>
+                                </div>
+                                <span class="game-status final">FINAL</span>
+                            </div>
+                            <div class="upcoming-game">
+                                <span class="upcoming-label">NEXT:</span>
+                                <span>SF @ DAL - Sun 1:25 PM</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+
+        <!-- Status Bar -->
+        <footer class="status-bar">
+            <div class="status-left">
+                <span class="status-item">
+                    <span class="status-icon connected"></span>
+                    Last updated: <span id="lastUpdate">7:28 AM</span>
+                </span>
+                <span class="status-separator">|</span>
+                <span class="status-item">Auto-refresh: 5 min</span>
+            </div>
+            <div class="status-center">
+                <span class="retro-badge">PointCast.xyz</span>
+                <span class="version">v2.0.26</span>
+            </div>
+            <div class="status-right">
+                <span class="status-item">Channels: 6</span>
+                <span class="status-separator">|</span>
+                <span class="status-item">
+                    <span class="bandwidth-icon"></span>
+                    28.8 kbps
+                </span>
+            </div>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
