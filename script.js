@@ -1,481 +1,245 @@
 /**
- * PointCast.xyz - Personal Morning Brief Dashboard
- * A nostalgic 1996-inspired dashboard with modern functionality
+ * PointCast.xyz - Grant Strategy Desk
  */
 
-(function() {
-    'use strict';
+(function () {
+    "use strict";
 
-    // ===== Time and Date Display =====
+    const targets = [
+        {
+            name: "OpenAI Grants",
+            priority: "P1",
+            tags: ["ai", "credits", "public-goods"],
+            ask: "API credits or targeted grant support.",
+            fit: "Pitch PointCast as an AI-native media workflow that turns model usage into inspectable public artifacts, demos, and documentation.",
+            next: "Prepare a Codex/OpenAI workflow demo and a credits budget.",
+            url: "https://grants.openai.com/"
+        },
+        {
+            name: "OpenAI Codex Open Source Fund",
+            priority: "P1",
+            tags: ["ai", "open-source", "tooling"],
+            ask: "Up to $25k API credits when the work qualifies.",
+            fit: "Best angle: open-source PointCast channel tooling, templates, and docs that show Codex-assisted building in the wild.",
+            next: "Publish a repo map, issues, and a three-milestone open-source plan.",
+            url: "https://openai.com/form/codex-open-source-fund/"
+        },
+        {
+            name: "Anthropic Startup Program",
+            priority: "P1",
+            tags: ["ai", "startup", "credits"],
+            ask: "Claude API credits, rate limits, or startup resources.",
+            fit: "Frame Claude as a research, writing, and coding collaborator inside a repeatable creator/media production system.",
+            next: "Show Claude usage, traction, and why higher limits unlock measurable output.",
+            url: "https://www.anthropic.com/startup-program-official-terms"
+        },
+        {
+            name: "Tezos Ecosystem Grants",
+            priority: "P1",
+            tags: ["crypto", "creator", "art"],
+            ask: "Milestone grant for Tezos-native media objects or creator tooling.",
+            fit: "Tezos has a strong art and experimental culture story. PointCast can make Tezos broadcasts, tokenized episodes, and educational launch pages.",
+            next: "Submit a quarterly proposal with technical plan, roadmap, team note, and ecosystem value.",
+            url: "https://tezos.foundation/ecosystem-grants-program/"
+        },
+        {
+            name: "Ethereum Ecosystem Support",
+            priority: "P2",
+            tags: ["crypto", "public-goods", "tooling"],
+            ask: "Public-good grant for open-source tooling, education, or community resources.",
+            fit: "Position PointCast as a lightweight public-good broadcast layer for Ethereum explainers, grant transparency, and local community channels.",
+            next: "Scope the request around open-source outputs and measurable community reuse.",
+            url: "https://ethereum.org/community/grants/"
+        },
+        {
+            name: "Solana Foundation Funding",
+            priority: "P2",
+            tags: ["crypto", "creator", "public-goods"],
+            ask: "Grant or ecosystem funding for fast consumer crypto experiments.",
+            fit: "Pitch quick public demos around creator distribution, mobile-friendly channels, and open-source components that help the Solana ecosystem learn.",
+            next: "Adapt the same pilot to Solana speed, consumer UX, and public-good criteria.",
+            url: "https://solana.org/grants-funding"
+        },
+        {
+            name: "Zora Ecosystem",
+            priority: "P2",
+            tags: ["creator", "crypto", "media"],
+            ask: "Partnership, ecosystem support, or creator economy collaboration.",
+            fit: "Zora is less of a classic grants page and more of a creator network fit: PointCast can create coinable broadcast identities and media drops.",
+            next: "Build a Zora-native sample channel and use it as outreach material.",
+            url: "https://zora.co/about"
+        },
+        {
+            name: "Y Combinator",
+            priority: "P3",
+            tags: ["startup", "ai", "company"],
+            ask: "Accelerator investment, not a grant.",
+            fit: "Convert the strategy into a startup application: who wants AI-native broadcast channels, why now, and what grows into a company.",
+            next: "Draft answers using YC's current RFS as validation, not as the whole thesis.",
+            url: "https://www.ycombinator.com/rfs/"
+        },
+        {
+            name: "Local and Cultural Funds",
+            priority: "P3",
+            tags: ["creator", "public-goods", "media"],
+            ask: "Microgrants for community media, art, education, and digital culture.",
+            fit: "PointCast can produce public local channels, digital posters, explainers, and workshops with clear community benefit.",
+            next: "Make a reusable city/culture version of the packet after the AI and protocol pass.",
+            url: "https://pointcast.xyz/"
+        }
+    ];
+
+    function escapeHtml(value) {
+        return String(value)
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
+    }
+
     function updateDateTime() {
         const now = new Date();
+        const timeEl = document.getElementById("currentTime");
+        const dateEl = document.getElementById("currentDate");
+        const lastUpdate = document.getElementById("lastUpdate");
 
-        // Format time
-        const hours = now.getHours();
-        const minutes = now.getMinutes();
-        const ampm = hours >= 12 ? 'PM' : 'AM';
-        const displayHours = hours % 12 || 12;
-        const displayMinutes = minutes.toString().padStart(2, '0');
-        const timeString = `${displayHours}:${displayMinutes} ${ampm}`;
+        if (timeEl) {
+            timeEl.textContent = now.toLocaleTimeString([], { hour: "numeric", minute: "2-digit" });
+        }
 
-        // Format date
-        const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-        const months = ['January', 'February', 'March', 'April', 'May', 'June',
-                       'July', 'August', 'September', 'October', 'November', 'December'];
-        const dayName = days[now.getDay()];
-        const monthName = months[now.getMonth()];
-        const date = now.getDate();
-        const year = now.getFullYear();
-        const dateString = `${dayName}, ${monthName} ${date}, ${year}`;
+        if (dateEl) {
+            dateEl.textContent = now.toLocaleDateString([], {
+                weekday: "long",
+                month: "long",
+                day: "numeric",
+                year: "numeric"
+            });
+        }
 
-        // Update elements
-        const timeEl = document.getElementById('currentTime');
-        const dateEl = document.getElementById('currentDate');
-
-        if (timeEl) timeEl.textContent = timeString;
-        if (dateEl) dateEl.textContent = dateString;
+        if (lastUpdate) {
+            lastUpdate.textContent = now.toLocaleDateString([], { month: "short", day: "numeric", year: "numeric" });
+        }
     }
 
-    // ===== Last Update Time =====
-    function updateLastUpdateTime() {
-        const now = new Date();
-        const hours = now.getHours();
-        const minutes = now.getMinutes();
-        const ampm = hours >= 12 ? 'PM' : 'AM';
-        const displayHours = hours % 12 || 12;
-        const displayMinutes = minutes.toString().padStart(2, '0');
-        const timeString = `${displayHours}:${displayMinutes} ${ampm}`;
-
-        const lastUpdateEl = document.getElementById('lastUpdate');
-        if (lastUpdateEl) lastUpdateEl.textContent = timeString;
-    }
-
-    // ===== Stock Ticker Animation =====
     function initTicker() {
-        const tickerContent = document.getElementById('tickerContent');
-        if (!tickerContent) return;
-
-        // Clone content for seamless loop
-        const clone = tickerContent.innerHTML;
-        tickerContent.innerHTML = clone + clone;
+        const ticker = document.getElementById("tickerContent");
+        if (!ticker) return;
+        ticker.innerHTML += ticker.innerHTML;
     }
 
-    // ===== Task Checkbox Interactions =====
-    function initTaskCheckboxes() {
-        const taskItems = document.querySelectorAll('.task-item');
+    function renderTargets(filter = "all", query = "") {
+        const grid = document.getElementById("targetGrid");
+        const count = document.getElementById("targetCount");
+        if (!grid) return;
 
-        taskItems.forEach(item => {
-            const checkbox = item.querySelector('.task-checkbox');
-            if (!checkbox) return;
+        const normalizedQuery = query.trim().toLowerCase();
+        const filtered = targets.filter((target) => {
+            const matchesFilter = filter === "all" || target.tags.includes(filter);
+            const searchable = [
+                target.name,
+                target.priority,
+                target.ask,
+                target.fit,
+                target.next,
+                target.tags.join(" ")
+            ].join(" ").toLowerCase();
+            return matchesFilter && (!normalizedQuery || searchable.includes(normalizedQuery));
+        });
 
-            checkbox.addEventListener('change', function() {
-                if (this.checked) {
-                    item.classList.add('completed');
-                    // Animate completion
-                    item.style.transition = 'opacity 0.3s, transform 0.3s';
-                    item.style.transform = 'translateX(10px)';
-                    setTimeout(() => {
-                        item.style.transform = '';
-                    }, 300);
-                } else {
-                    item.classList.remove('completed');
-                }
-                updateTaskCount();
+        grid.innerHTML = filtered.map((target) => `
+            <article class="target-card">
+                <header>
+                    <h3>${escapeHtml(target.name)}</h3>
+                    <span class="priority">${escapeHtml(target.priority)}</span>
+                </header>
+                <div class="target-meta">
+                    ${target.tags.map((tag) => `<span>${escapeHtml(tag)}</span>`).join("")}
+                </div>
+                <p><strong>Ask:</strong> ${escapeHtml(target.ask)}</p>
+                <p class="fit"><strong>Fit:</strong> ${escapeHtml(target.fit)}</p>
+                <p><strong>Next:</strong> ${escapeHtml(target.next)}</p>
+                <a href="${escapeHtml(target.url)}" target="_blank" rel="noreferrer">Open program link</a>
+            </article>
+        `).join("");
+
+        if (count) {
+            count.textContent = filtered.length === 1 ? "1 target" : filtered.length + " targets";
+        }
+    }
+
+    function initFilters() {
+        const chips = Array.from(document.querySelectorAll(".chip"));
+        const search = document.getElementById("targetSearch");
+        let activeFilter = "all";
+
+        chips.forEach((chip) => {
+            chip.addEventListener("click", () => {
+                chips.forEach((item) => item.classList.remove("active"));
+                chip.classList.add("active");
+                activeFilter = chip.dataset.filter || "all";
+                renderTargets(activeFilter, search ? search.value : "");
             });
         });
-    }
 
-    // ===== Update Task Count =====
-    function updateTaskCount() {
-        const taskCountEl = document.querySelector('.task-count');
-        const uncheckedTasks = document.querySelectorAll('.task-checkbox:not(:checked)').length;
-        if (taskCountEl) {
-            taskCountEl.textContent = `${uncheckedTasks} remaining`;
+        if (search) {
+            search.addEventListener("input", () => {
+                renderTargets(activeFilter, search.value);
+            });
         }
     }
 
-    // ===== Panel Collapse/Expand =====
-    function initPanelControls() {
-        const panels = document.querySelectorAll('.panel');
-
-        panels.forEach(panel => {
-            const expandBtn = panel.querySelector('.panel-btn[title="Expand"]');
-            const content = panel.querySelector('.panel-content');
-
-            if (expandBtn && content) {
-                expandBtn.addEventListener('click', function() {
-                    const isCollapsed = content.style.display === 'none';
-                    content.style.display = isCollapsed ? '' : 'none';
-                    this.textContent = isCollapsed ? '▼' : '▲';
-                });
-            }
-        });
-    }
-
-    // ===== Menu Dropdown Keyboard Navigation =====
-    function initMenuKeyboard() {
-        const menuItems = document.querySelectorAll('.menu-item');
-
-        menuItems.forEach(item => {
-            item.addEventListener('keydown', function(e) {
-                const dropdown = this.querySelector('.dropdown');
-                if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
-                }
-                if (e.key === 'Escape') {
-                    dropdown.style.display = 'none';
-                }
+    function initCommands() {
+        document.querySelectorAll("[data-scroll]").forEach((button) => {
+            button.addEventListener("click", () => {
+                const target = document.getElementById(button.dataset.scroll);
+                if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
             });
         });
-    }
 
-    // ===== Window Control Buttons =====
-    function initWindowControls() {
-        const minimizeBtn = document.querySelector('.win-btn.minimize');
-        const maximizeBtn = document.querySelector('.win-btn.maximize');
-        const closeBtn = document.querySelector('.win-btn.close');
-        const appContainer = document.querySelector('.app-container');
-
-        if (minimizeBtn) {
-            minimizeBtn.addEventListener('click', function() {
-                appContainer.style.transition = 'transform 0.3s, opacity 0.3s';
-                appContainer.style.transform = 'scale(0.1) translateY(100vh)';
-                appContainer.style.opacity = '0';
-                setTimeout(() => {
-                    appContainer.style.transform = '';
-                    appContainer.style.opacity = '';
-                }, 2000);
-            });
-        }
-
-        if (maximizeBtn) {
-            maximizeBtn.addEventListener('click', function() {
-                appContainer.classList.toggle('maximized');
-                if (appContainer.classList.contains('maximized')) {
-                    appContainer.style.maxWidth = '100%';
-                    appContainer.style.maxHeight = '100%';
-                    appContainer.style.margin = '0';
-                } else {
-                    appContainer.style.maxWidth = '';
-                    appContainer.style.maxHeight = '';
-                    appContainer.style.margin = '';
-                }
-            });
-        }
-
-        if (closeBtn) {
-            closeBtn.addEventListener('click', function() {
-                if (confirm('Exit PointCast.xyz?')) {
-                    appContainer.style.transition = 'transform 0.5s, opacity 0.5s';
-                    appContainer.style.transform = 'scale(0) rotate(10deg)';
-                    appContainer.style.opacity = '0';
-                }
-            });
-        }
-    }
-
-    // ===== Refresh Button Animation =====
-    function initRefreshButton() {
-        const refreshBtn = document.querySelector('.toolbar-btn[title="Refresh All"]');
-
-        if (refreshBtn) {
-            refreshBtn.addEventListener('click', function() {
-                const icon = this.querySelector('.refresh-icon');
-                if (icon) {
-                    icon.style.animation = 'spin 1s ease-in-out';
-                    setTimeout(() => {
-                        icon.style.animation = '';
-                        updateLastUpdateTime();
-                    }, 1000);
+        document.querySelectorAll("[data-command]").forEach((button) => {
+            button.addEventListener("click", () => {
+                if (button.dataset.command === "print") {
+                    window.print();
                 }
 
-                // Simulate refresh of all panels
-                const panels = document.querySelectorAll('.panel-content');
-                panels.forEach(panel => {
-                    panel.style.opacity = '0.5';
-                    setTimeout(() => {
-                        panel.style.opacity = '1';
-                    }, 500);
-                });
-            });
-        }
-    }
-
-    // ===== AI Brief Regenerate =====
-    function initAIBrief() {
-        const regenerateBtn = document.querySelector('.ai-brief-panel .panel-btn[title="Regenerate"]');
-
-        if (regenerateBtn) {
-            regenerateBtn.addEventListener('click', function() {
-                const summaryItems = document.querySelectorAll('.summary-item');
-                const aiContent = document.querySelector('.ai-brief-panel .panel-content');
-
-                // Add loading state
-                aiContent.style.opacity = '0.5';
-                this.textContent = '⏳';
-
-                setTimeout(() => {
-                    aiContent.style.opacity = '1';
-                    this.textContent = '↻';
-
-                    // Update the "updated" time
-                    const updateTime = document.querySelector('.update-time');
-                    if (updateTime) {
-                        updateTime.textContent = 'Updated just now';
-                    }
-                }, 1500);
-            });
-        }
-    }
-
-    // ===== News Category Filter =====
-    function initNewsFilter() {
-        const filterBtns = document.querySelectorAll('.news-panel .panel-controls .panel-btn');
-        const newsItems = document.querySelectorAll('.news-item');
-
-        filterBtns.forEach(btn => {
-            btn.addEventListener('click', function() {
-                // Update active state
-                filterBtns.forEach(b => b.classList.remove('active'));
-                this.classList.add('active');
-
-                const filter = this.textContent.toLowerCase();
-
-                newsItems.forEach(item => {
-                    const category = item.querySelector('.news-category');
-                    if (!category) return;
-
-                    if (filter === 'all') {
-                        item.style.display = '';
-                    } else if (filter === 'tech' && category.classList.contains('tech')) {
-                        item.style.display = '';
-                    } else if (filter === 'biz' && category.classList.contains('business')) {
-                        item.style.display = '';
-                    } else {
-                        item.style.display = filter === 'all' ? '' : 'none';
-                    }
-                });
-            });
-        });
-    }
-
-    // ===== Sports Tab Switching =====
-    function initSportsTabs() {
-        const sportsBtns = document.querySelectorAll('.sports-panel .panel-controls .panel-btn');
-
-        sportsBtns.forEach(btn => {
-            btn.addEventListener('click', function() {
-                sportsBtns.forEach(b => b.classList.remove('active'));
-                this.classList.add('active');
-
-                // In a real app, this would load different sports data
-                const content = document.querySelector('.sports-scores');
-                if (content) {
-                    content.style.opacity = '0.5';
-                    setTimeout(() => {
-                        content.style.opacity = '1';
-                    }, 300);
+                if (button.dataset.command === "screensaver") {
+                    const saver = document.getElementById("screensaver");
+                    if (saver) saver.classList.add("active");
                 }
             });
         });
-    }
 
-    // ===== Add Task Button =====
-    function initAddTask() {
-        const addTaskBtn = document.querySelector('.add-task-btn');
-        const taskList = document.querySelector('.task-list');
-
-        if (addTaskBtn && taskList) {
-            addTaskBtn.addEventListener('click', function() {
-                const taskText = prompt('Enter new task:');
-                if (taskText && taskText.trim()) {
-                    const taskId = 'task' + Date.now();
-                    const newTask = document.createElement('li');
-                    newTask.className = 'task-item priority-medium';
-                    newTask.innerHTML = `
-                        <input type="checkbox" id="${taskId}" class="task-checkbox">
-                        <label for="${taskId}" class="task-label">
-                            <span class="task-text">${taskText}</span>
-                            <span class="task-due">New</span>
-                        </label>
-                    `;
-
-                    // Insert before completed tasks
-                    const completedTask = taskList.querySelector('.task-item.completed');
-                    if (completedTask) {
-                        taskList.insertBefore(newTask, completedTask);
-                    } else {
-                        taskList.appendChild(newTask);
-                    }
-
-                    // Reinitialize checkbox listeners
-                    const checkbox = newTask.querySelector('.task-checkbox');
-                    checkbox.addEventListener('change', function() {
-                        if (this.checked) {
-                            newTask.classList.add('completed');
-                        } else {
-                            newTask.classList.remove('completed');
-                        }
-                        updateTaskCount();
-                    });
-
-                    updateTaskCount();
-
-                    // Highlight new task
-                    newTask.style.animation = 'fadeIn 0.5s ease-out';
-                }
-            });
+        const saver = document.getElementById("screensaver");
+        if (saver) {
+            saver.addEventListener("click", () => saver.classList.remove("active"));
         }
     }
 
-    // ===== Calendar Navigation =====
-    function initCalendarNav() {
-        const prevBtn = document.querySelector('.calendar-panel .panel-btn[title="Previous"]');
-        const nextBtn = document.querySelector('.calendar-panel .panel-btn[title="Next"]');
-
-        if (prevBtn) {
-            prevBtn.addEventListener('click', function() {
-                // In a real app, this would navigate to previous day
-                console.log('Navigate to previous day');
-            });
-        }
-
-        if (nextBtn) {
-            nextBtn.addEventListener('click', function() {
-                // In a real app, this would navigate to next day
-                console.log('Navigate to next day');
-            });
-        }
-    }
-
-    // ===== Screensaver =====
-    function initScreensaver() {
-        const screensaver = document.getElementById('screensaver');
-        if (!screensaver) return;
-
-        let inactivityTimer;
-        const INACTIVITY_TIMEOUT = 300000; // 5 minutes
-
-        function showScreensaver() {
-            screensaver.style.display = 'flex';
-        }
-
-        function hideScreensaver() {
-            screensaver.style.display = 'none';
-        }
-
-        function resetInactivityTimer() {
-            clearTimeout(inactivityTimer);
-            inactivityTimer = setTimeout(showScreensaver, INACTIVITY_TIMEOUT);
-        }
-
-        // Hide screensaver on any interaction
-        screensaver.addEventListener('click', hideScreensaver);
-        document.addEventListener('keydown', function() {
-            hideScreensaver();
-            resetInactivityTimer();
-        });
-        document.addEventListener('mousemove', resetInactivityTimer);
-        document.addEventListener('click', resetInactivityTimer);
-
-        // Start timer
-        resetInactivityTimer();
-    }
-
-    // ===== Quick Links Badge Updates =====
-    function simulateBadgeUpdates() {
-        // Simulate occasional badge updates (for demo purposes)
-        const badges = document.querySelectorAll('.quick-link .badge');
-
-        setInterval(() => {
-            badges.forEach(badge => {
-                if (Math.random() > 0.7) {
-                    const currentValue = parseInt(badge.textContent) || 0;
-                    const newValue = currentValue + Math.floor(Math.random() * 3);
-                    badge.textContent = newValue;
-                    badge.style.animation = 'pulse 0.5s ease-out';
-                    setTimeout(() => {
-                        badge.style.animation = '';
-                    }, 500);
-                }
-            });
-        }, 30000); // Every 30 seconds
-    }
-
-    // ===== Keyboard Shortcuts =====
     function initKeyboardShortcuts() {
-        document.addEventListener('keydown', function(e) {
-            // Ctrl/Cmd + R = Refresh
-            if ((e.ctrlKey || e.metaKey) && e.key === 'r') {
-                e.preventDefault();
-                const refreshBtn = document.querySelector('.toolbar-btn[title="Refresh All"]');
-                if (refreshBtn) refreshBtn.click();
+        document.addEventListener("keydown", (event) => {
+            if (event.key === "Escape") {
+                const saver = document.getElementById("screensaver");
+                if (saver) saver.classList.remove("active");
             }
 
-            // Escape = Close modals/dropdowns
-            if (e.key === 'Escape') {
-                document.querySelectorAll('.dropdown').forEach(d => d.style.display = 'none');
+            if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "f") {
+                const search = document.getElementById("targetSearch");
+                if (search) {
+                    event.preventDefault();
+                    search.focus();
+                }
             }
         });
     }
 
-    // ===== Add CSS Animation Keyframes =====
-    function addAnimationStyles() {
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes spin {
-                from { transform: rotate(0deg); }
-                to { transform: rotate(360deg); }
-            }
-
-            @keyframes fadeIn {
-                from {
-                    opacity: 0;
-                    transform: translateY(-10px);
-                }
-                to {
-                    opacity: 1;
-                    transform: translateY(0);
-                }
-            }
-        `;
-        document.head.appendChild(style);
-    }
-
-    // ===== Initialize Everything =====
-    function init() {
-        addAnimationStyles();
+    document.addEventListener("DOMContentLoaded", () => {
         updateDateTime();
-        updateLastUpdateTime();
+        setInterval(updateDateTime, 60000);
         initTicker();
-        initTaskCheckboxes();
-        initPanelControls();
-        initMenuKeyboard();
-        initWindowControls();
-        initRefreshButton();
-        initAIBrief();
-        initNewsFilter();
-        initSportsTabs();
-        initAddTask();
-        initCalendarNav();
-        initScreensaver();
+        renderTargets();
+        initFilters();
+        initCommands();
         initKeyboardShortcuts();
-        simulateBadgeUpdates();
-
-        // Update time every second
-        setInterval(updateDateTime, 1000);
-
-        // Update "last updated" every 5 minutes
-        setInterval(updateLastUpdateTime, 300000);
-
-        console.log('PointCast.xyz initialized - Welcome to 1996! 📺');
-    }
-
-    // Run on DOM ready
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', init);
-    } else {
-        init();
-    }
+    });
 })();

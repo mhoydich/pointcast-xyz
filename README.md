@@ -1,78 +1,58 @@
-# PointCast.xyz
+# PointCast.xyz Grant Strategy
 
-A nostalgic 1996-inspired personal morning brief dashboard - PointCast meets modern AI.
+A retro PointCast-style grant request command center for PointCast.xyz.
 
 ## Overview
 
-PointCast.xyz is a static HTML/CSS prototype that recreates the magic of the original PointCast screensaver from 1996, reimagined for the modern era with AI-powered morning briefs.
+This static page frames PointCast.xyz as a fundable AI-native media and protocol experiment. It includes a strategy brief, status strip, funder target board, ask matrix, 14-day submission sprint, reusable application packet, and source links for current grant/program pages.
 
-## Features
+Fresh public URL after deploy:
 
-### Dashboard Components
+```text
+https://www.pointcast.xyz/grants/
+```
 
-- **AI Morning Brief** - Personalized daily summary with weather, calendar, news, and task highlights
-- **Top Headlines** - Filterable news feed with tech, business, and world news
-- **Weather Widget** - Current conditions and 5-day forecast with retro-styled icons
-- **Today's Schedule** - Timeline view of calendar events with color-coded categories
-- **Tasks** - Interactive to-do list with priority levels and completion tracking
-- **Quick Links** - Customizable shortcuts with notification badges
-- **Sports Scores** - Live scores and upcoming games
-- **Stock Ticker** - Scrolling market data with real-time styling
+## Priority Targets
 
-### Retro Design Elements
-
-- Windows 95/98 inspired UI with beveled buttons and borders
-- Classic title bar with minimize/maximize/close buttons
-- Dropdown menus and toolbar
-- Retro scrollbars
-- Nostalgic color palette (teal background, gray panels)
-- Pixel-perfect shadows and highlights
-- CRT-style ticker animation
-
-### Modern Features
-
-- Fully responsive layout (desktop, tablet, mobile)
-- CSS Grid and Flexbox layout
-- Interactive JavaScript components
-- Keyboard shortcuts (Ctrl+R to refresh)
-- Screensaver mode after inactivity
-- Print-friendly styles
+- OpenAI grants and Codex open-source credits
+- Anthropic startup/API credit programs
+- Tezos ecosystem grants
+- Ethereum public-good and ecosystem support programs
+- Solana grants and ecosystem funding
+- Zora creator economy collaboration
+- Y Combinator as an accelerator/company path
+- Local cultural, creator, and public media microgrants
 
 ## Getting Started
 
-1. Clone the repository
-2. Open `index.html` in a web browser
-3. No build process required - it's a static prototype!
+Open `index.html` directly in a browser. No build step is required.
 
 ```bash
-# Simply open in browser
 open index.html
+```
 
-# Or serve locally
+Or serve the directory locally:
+
+```bash
 python -m http.server 8000
-# Then visit http://localhost:8000
 ```
 
 ## File Structure
 
-```
+```text
 pointcast-xyz/
-├── index.html      # Main HTML structure
-├── styles.css      # Retro-inspired CSS styling
-├── script.js       # Interactive functionality
-└── README.md       # This file
+|-- CNAME
+|-- grants/
+|   `-- index.html
+|-- index.html
+|-- styles.css
+|-- script.js
+`-- README.md
 ```
 
-## Browser Support
+## Notes
 
-- Chrome (recommended)
-- Firefox
-- Safari
-- Edge
-
-## Inspiration
-
-This project is inspired by [PointCast](https://en.wikipedia.org/wiki/PointCast), the pioneering push technology platform from 1996 that delivered personalized news and information as a screensaver. We've reimagined it for 2026 with modern web technologies while preserving the nostalgic aesthetic.
+Before submitting any application, re-open the source links in the page and confirm the program is still active, eligible, and accepting the relevant type of request.
 
 ## License
 
