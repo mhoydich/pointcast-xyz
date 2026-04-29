@@ -4,12 +4,13 @@ A retro PointCast-style grant request command center for PointCast.xyz.
 
 ## Overview
 
-This static page frames PointCast.xyz as a fundable AI-native media and protocol experiment. It includes a strategy brief, status strip, funder target board, ask matrix, 14-day submission sprint, reusable application packet, and source links for current grant/program pages.
+This static site frames PointCast.xyz as a fundable AI-native media and protocol experiment. It includes a grant strategy desk plus an investor memo for Nouns Nation Builder, agents, AI, and Nouns Builder-aligned onchain community infrastructure.
 
 Fresh public URL after deploy:
 
 ```text
 https://www.pointcast.xyz/grants/
+https://www.pointcast.xyz/investment-thesis/
 ```
 
 ## Priority Targets
@@ -43,6 +44,8 @@ python -m http.server 8000
 pointcast-xyz/
 |-- CNAME
 |-- grants/
+|   `-- index.html
+|-- investment-thesis/
 |   `-- index.html
 |-- index.html
 |-- styles.css
