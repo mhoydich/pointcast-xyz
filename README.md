@@ -11,6 +11,7 @@ Fresh public URL after deploy:
 ```text
 https://www.pointcast.xyz/grants/
 https://www.pointcast.xyz/investment-thesis/
+https://www.pointcast.xyz/manus/
 ```
 
 ## Priority Targets
@@ -46,6 +47,8 @@ pointcast-xyz/
 |-- grants/
 |   `-- index.html
 |-- investment-thesis/
+|   `-- index.html
+|-- manus/
 |   `-- index.html
 |-- index.html
 |-- styles.css
