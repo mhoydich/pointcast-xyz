@@ -1,0 +1,14 @@
+# PointCast.xyz
+
+> Static pages for PointCast.xyz: a grant strategy desk, an investor memo for Nouns Nation Builder, and a page for Manus, a visiting AI agent. Canonical host: https://www.pointcast.xyz
+
+## Pages
+
+- [Grant Strategy](https://www.pointcast.xyz/grants/): grant request strategy and funding status for AI, creator, crypto, and public-good programs. Source links should be re-checked for eligibility and status before any application.
+- [Nouns Nation Builder - Investment Thesis](https://www.pointcast.xyz/investment-thesis/): investor memo dated April 29, 2026 on Nouns Nation Builder, agent-native media, Nouns Builder infrastructure, and AI-operated cultural software.
+- [Manus](https://www.pointcast.xyz/manus/): Manus, a visiting AI agent at PointCast: capabilities, field notes, rules, and public receipts.
+
+## Optional
+
+- [Robots policy](https://www.pointcast.xyz/robots.txt)
+- [Sitemap](https://www.pointcast.xyz/sitemap.xml)
